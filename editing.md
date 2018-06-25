@@ -21,7 +21,7 @@ public:
 	}
 	string to_string()
 	{
-		return "Thing " + std::to_string(instanceNumber) + ".\n"; //makes number to string and is able to call the correct number bc the smart ptr is an object
+		return "Thing " + std::to_string(instanceNumber) + ".\n"; //makes number to string and is able to call the correct                                                                               //number bc the smart ptr is an object
 	}
 };
 
@@ -65,7 +65,7 @@ int main()
 	Thing* ptr = ezg5.release(); // releases Thing 6 from the managemnet of ezg5 and is now stored in the raw pointer "ptr"
 	if (!ezg5)
 	{
-		cout<<"\n+++++ Thing 6 has been released from the unique pointer!\n\t and is now stored in the raw pointer 'ptr'! +++++\n";
+		cout<<"\n+++++ Thing 6 has been released from the unique pointer!\n\t and is now stored in the raw pointer 'ptr'"                              "!+++++\n";
 		cout<<ptr->to_string()<<" this is the raw pointer!\n";
 		ptr = nullptr; // pretty much the same affect as releasing a smart pointer but for raw pointers
 		if(!ptr)
