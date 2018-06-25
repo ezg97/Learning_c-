@@ -16,10 +16,17 @@ public:
 	}
 	// constructor
 	Person(){name="";age=0;}
-	Person(const std::string& name, int age)
-	{   this->name=name;
-	    this->age=age;	}
+	Person(const std::string& name, int age);
+	void printAddressAndValue();
 };
+Person :: Person(const std::string& name, int age)
+{   this->name=name;
+	    this->age=age;	}
+void Person::printAddressAndValue()
+{
+	std::cout<<"The object at address "<<this<<" has a "
+		 <<" value of: "<<(*this).age<<std::endl;
+}
 
 int main()
 {
@@ -35,42 +42,47 @@ int main()
     std::cout<<"Person 3: "<<p3->to_string();
     std::cout<<"Person 4: "<<p4->to_string();
     
-	/*
-	ezg5 = move(ezg6);	//destroy 5, ezg5 manages 6
+    std::cout<<"\nPerson 1: ";
+    p1->printAddressAndValue();
+    std::cout<<"\nAmount of shared pointers referring to hte same managed object as Person 1: "<<p1.use_count()<<std::endl<<std::endl; 
+    
+    std::cout<<"Person 3: ";
+	p3->printAddressAndValue();
+	p3.reset();
+    std::cout<<"Person 3 has been reset...\n";
+    std::cout<<"Person 3: ";
+	if (!p3)
+	{   std::cout<<"Empty\n";   }
+	
+	std::cout<<"\nAmount of shared pointers referring to hte same managed object as Person 1: "<<p1.use_count()<<std::endl<<std::endl; 
 
-//********* Checking if unique pointer ezg6 still exists ****************
-	if (!ezg6)
-	{
-		cout<<"\n-----\tezg6 is no longer.\t-----\n\n";
-	}
+	p2.reset();
+    std::cout<<"Person 2 has been reset...\n";
+    std::cout<<"Person 2: ";
+	if (!p2)
+	{   std::cout<<"Empty\n";   }
+    
+    std::cout<<"\nAmount of shared pointers referring to hte same managed object as Person 1: "<<p1.use_count()<<std::endl<<std::endl; 
+    
+    p1.reset();
+    std::cout<<"Person 1 has been reset...\n";
+    std::cout<<"Person 1: ";
+	if (!p1)
+	{   std::cout<<"Empty\n";   }
+    std::cout<<"\nAmount of shared pointers referring to the same managed object as Person 1: "<<p1.use_count()<<std::endl<<std::endl; 
 	
-	ezg1.reset();	// destroy 1
+	p1=std::make_shared<Person>("Lil John Wayne 2.0", 17);
+	std::cout<<"Person 1: "<<p1->to_string();	
 	
-	ezg1.reset(new Thing);	// ezg1 manages 7
+	std::cout<<"\nAmount of shared pointers referring to the same managed object as Person 1: "<<p1.use_count()<<std::endl<<std::endl; 
 
-	cout<< ezgArr2[0].to_string();
-	cout<< ezgArr2[1].to_string();
+    std::cout<<"Person 1 was moved to Person 2\n";
+    p2=move(p1);
+    std::cout<<"Person 1: ";
+	if (!p1)
+	{   std::cout<<"Empty\n";   }
+    std::cout<<"Person 2: "<<p2->to_string();	
 	
 	
-	ezg1.release(); // only for unique pointers, it releases
-	//ownership of the object.
-	if (!ezg1)
-	{
-		cout<<"Thing 7 has been released.\n";
-	}
-	
-	Thing* ptr = ezg5.release(); // releases Thing 6 from the managemnet of ezg5 and is now stored in the raw pointer "ptr"
-	if (!ezg5)
-	{
-		cout<<"\n+++++ Thing 6 has been released from the unique pointer!\n\t and is now stored in the raw pointer 'ptr'! +++++\n";
-		cout<<ptr->to_string()<<" this is the raw pointer!\n";
-		ptr = nullptr; // pretty much the same affect as releasing a smart pointer but for raw pointers
-		if(!ptr)
-		{
-			cout<<"Thing 6 destroyed.\n\n";
-		}
-	}
-	// now all smart pointers will go out of scope
-	*/
 	return 0;
 }
